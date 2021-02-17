@@ -1,0 +1,44 @@
+function onEdit2(event)
+{
+  var ss = SpreadsheetApp.getActiveSheet();
+
+  if( ss.getName() == "Main" ) //checks that we're on Sheet "Main" or not
+  { 
+
+  var q = ss.getActiveCell();
+  
+if (q.getColumn() == 14)
+{
+   var cell2 = q.offset(0,-11);
+   var emailtosend = cell2.getValue();
+   var shipcompany = q.offset(0,5);
+   
+   shipcompany.getValue();
+   
+   var sub = q.offset(0,-13);
+
+   var itemcode = q.offset(0,-4);
+
+   var qty = q.offset(0,-3);
+
+   var type = q.offset(0,-2);
+
+   var rem1 = q.offset(0,0);
+   
+   var body1 = "your requested item " +itemcode.getValues()+ " has been shipped with the shipping company---  " +"'"+ shipcompany.getValue()+"'"+"---" ;
+   var body2 =  " --- The Warehouse-Remarks are showing as --- "+"'"+ rem1.getValues()+"'";
+   var body = body2  + " and " +"\n"+ body1;
+
+   var subject = "serial no." + sub.getValues();
+   
+   var msgHtml = "<p>" + "<b>Email:</b> " + emailtosend.toString() + "</p>"
+        + "<p>" + "<b>Serial number:</b> " + subject.toString() + "</p>"
+        + "<p>" + "<b>Message:</b> " + body.toString() + "</p>";
+
+        
+    var msgPlain = msgHtml.replace(/(<([^>]+)>)/ig, ""); // clear html tags for plain mail
+
+MailApp.sendEmail(emailtosend, subject, body, { htmlBody: msgHtml });
+    }
+  }
+}
