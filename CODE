@@ -1,0 +1,28 @@
+function onEdit(e) {
+    var s = SpreadsheetApp.getActiveSheet();
+
+if( s.getName() == "Main" ) //checks that we're on Sheet "Main" or not 
+{
+    var r = s.getActiveCell();
+    var userEmail = Session.getActiveUser().getEmail();
+
+    if ( r.getColumn() == 4)
+    {
+
+      var cell = r.offset(0,-1);
+    if (userEmail === '' || !userEmail || userEmail === undefined) {
+        userEmail = PropertiesService.getUserProperties().getProperty('userEmail');
+                                   
+           PropertiesService.getUserProperties().setProperty('userEmail', userEmail);
+       
+    }
+    cell.setValue(userEmail);
+var nextCell = r.offset(0, -2);
+//if( nextCell.getValue() === '' ) //checks if the previous cell is empty or not?
+nextCell.setValue(new Date());
+
+
+
+}
+}
+}
